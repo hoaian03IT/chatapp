@@ -1,0 +1,20 @@
+@use "variables" as *;
+
+.profile-modal {
+    .header,
+    .body {
+        background-color: $secondary-color;
+        border-color: $light-blue-color;
+    }
+
+    .body {
+        max-height: 320px;
+        border-radius: 4px;
+        overflow: hidden;
+        .bio {
+            &-content {
+                word-break: break-word;
+            }
+        }
+    }
+}

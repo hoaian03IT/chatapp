@@ -1,0 +1,20 @@
+@use "variables" as *;
+
+.textarea-limit-word {
+    .textarea {
+        background-color: $light-blue-color;
+        border-color: transparent;
+    }
+    .limit-words {
+        bottom: 10px;
+        font-size: 12px;
+        color: $dark-blue-color;
+
+        &.left {
+            left: 20px;
+        }
+        &.right {
+            right: 20px;
+        }
+    }
+}

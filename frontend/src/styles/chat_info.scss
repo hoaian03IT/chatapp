@@ -1,0 +1,15 @@
+@use "variables" as *;
+
+.chat-info {
+    height: 100vh;
+    border-left: 1px solid $secondary-color;
+    background-color: $light-blue-color;
+    .chat-members {
+        overflow: hidden;
+        .list-members {
+            max-height: 90%;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+    }
+}

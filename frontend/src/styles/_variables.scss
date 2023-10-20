@@ -1,0 +1,23 @@
+$width-form: 340px;
+
+$small-avatar-size: 24px;
+$smaller-avatar-size: 28px;
+$medium-avatar-size: 34px;
+$larger-avatar-size: 44px;
+$large-avatar-size: 56px;
+$huge-avatar-size: 78px;
+
+$secondary-color: #5cc2f2;
+$primary-color: #191caa;
+$dark-blue-color: #282960;
+$light-blue-color: #389dcd;
+$red-color: #cf3332;
+$separator-color: #acacac;
+$black-color: #000;
+$white-color: #fff;
+$gray-color: #ccc;
+
+@mixin fit-image() {
+    object-fit: cover;
+    object-position: center;
+}

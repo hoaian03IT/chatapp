@@ -1,0 +1,29 @@
+@use "variables" as *;
+
+$max-height-header: 110px;
+$max-height-input: 80px;
+
+.chat-box {
+    height: 100vh;
+    .header {
+        max-height: $max-height-header;
+        background-color: #0a2c3d99;
+        box-shadow: 0px 2px 10px 0px #0a2c3d99;
+
+        .wrapper-header {
+            border-bottom: 2px solid $separator-color;
+            .room-pic {
+                border: 1px solid $secondary-color;
+            }
+            .name,
+            .quantity-member {
+                color: $white-color;
+            }
+        }
+    }
+    .messages {
+        height: calc(100vh - $max-height-header - $max-height-input);
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}

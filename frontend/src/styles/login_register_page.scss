@@ -1,0 +1,73 @@
+@use "variables" as *;
+
+.login-page,
+.register-page {
+    height: 100%;
+    width: 100vw;
+
+    .form {
+        padding: 12px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: $width-form;
+        width: 100%;
+        background-color: $secondary-color;
+        border-radius: 10px;
+        overflow: hidden;
+
+        .logo-image {
+            text-align: center;
+            .logo {
+                width: 60%;
+                object-fit: contain;
+                object-position: center;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            background-color: $light-blue-color;
+            border-color: rgba($color: #5cc2f2, $alpha: 0.8);
+            border-radius: 4px;
+            .input {
+                background-color: transparent;
+                border-color: transparent;
+                font-weight: 600;
+            }
+            .icon-issue {
+                margin-right: 4px;
+                color: $red-color;
+                fill: $red-color;
+                user-select: none;
+            }
+
+            &.password {
+                .icon-password {
+                    margin-right: 4px;
+                    cursor: pointer;
+                    user-select: none;
+                }
+            }
+
+            & + .form-group {
+                margin-top: 8px;
+            }
+        }
+
+        .submit-btn {
+            margin-top: 8px;
+            padding: 4px 8px;
+            font-weight: 600;
+            box-shadow: rgba($color: $secondary-color, $alpha: 0.35) 0px 5px 15px;
+
+            &:active {
+                transform: translateY(0.5px);
+                box-shadow: rgba($color: $secondary-color, $alpha: 1) 3px 3px 6px 0px inset,
+                    rgba($color: $secondary-color, $alpha: 0.5) -3px -3px 6px 1px inset;
+            }
+        }
+    }
+}

@@ -1,0 +1,37 @@
+@use "variables" as *;
+@use "chat_box" as *;
+
+.form-input {
+    max-height: $max-height-input;
+    .emoji {
+        position: relative;
+        .picker-table {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+        }
+
+        .icon-emoji {
+            fill: $white-color;
+            cursor: pointer;
+            user-select: none;
+
+            &:active {
+                opacity: 0.8;
+            }
+        }
+    }
+    .textarea {
+        $min-height: 36px;
+        width: 100%;
+        min-height: $min-height;
+        max-height: calc($min-height * 2);
+        line-height: 1;
+        border-radius: 4px;
+        background-color: $white-color;
+        outline: none;
+        overflow-x: hidden;
+        overflow-y: auto;
+        resize: none;
+    }
+}

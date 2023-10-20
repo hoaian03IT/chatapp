@@ -1,0 +1,44 @@
+@use "variables" as *;
+$height-header-sidebar: 150px;
+
+.sidebar {
+    background-color: $light-blue-color;
+    border-right: 1px solid $secondary-color;
+    overflow: hidden;
+
+    .header {
+        max-height: $height-header-sidebar;
+        border-bottom: 1px solid $separator-color;
+        .btn + .btn {
+            margin-left: 4px;
+        }
+    }
+    .main {
+        max-height: calc(90vh - $height-header-sidebar);
+        .btn-create-new-chat {
+            background-color: transparent;
+            border-left: none;
+            border-right: none;
+            border-top: none;
+            border-bottom: 1px solid $separator-color;
+
+            .wrapper-icon-create {
+                .icon-create {
+                    border: 2px dashed $white-color;
+                    color: $white-color;
+                    border-radius: 50%;
+                }
+            }
+            .title {
+                color: $white-color;
+            }
+
+            &:hover {
+                background-color: rgba($color: $secondary-color, $alpha: 0.2);
+            }
+            &:active {
+                opacity: 0.7;
+            }
+        }
+    }
+}

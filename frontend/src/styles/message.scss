@@ -1,0 +1,30 @@
+@use "variables" as *;
+
+.message {
+    .message-item {
+        padding: 4px 8px;
+        max-width: 100%;
+        font-size: 16px;
+        font-weight: normal;
+        color: $white-color;
+        background-color: $secondary-color;
+        border-radius: 6px;
+        overflow: hidden;
+        word-wrap: break-word;
+
+        // &:first-of-type {
+        //     border-top-left-radius: 10px;
+        // }
+        // &:last-of-type {
+        //     border-bottom-left-radius: 10px;
+        // }
+    }
+    .message-status {
+        color: $white-color;
+        font-size: 12px;
+
+        .icon-error {
+            fill: $red-color;
+        }
+    }
+}

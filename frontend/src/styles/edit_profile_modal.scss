@@ -1,0 +1,22 @@
+@use "variables" as *;
+
+.edit-profile-modal {
+    .header,
+    .body {
+        background-color: $secondary-color;
+        border-color: $light-blue-color;
+    }
+
+    .body {
+        border-radius: 4px;
+    }
+
+    .avatar-user {
+        cursor: pointer;
+    }
+
+    .input-username {
+        background-color: $light-blue-color;
+        border-color: transparent;
+    }
+}

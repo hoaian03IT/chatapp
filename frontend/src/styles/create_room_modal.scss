@@ -1,0 +1,56 @@
+@use "variables" as *;
+
+.create-room-modal {
+    .header,
+    .body {
+        background-color: $secondary-color;
+        border-color: $light-blue-color;
+    }
+
+    .body {
+        border-radius: 4px;
+        .search-box {
+            background-color: $white-color;
+            border-radius: 4px;
+        }
+        .search-input {
+            border: none;
+        }
+        .clear-icon,
+        .search-icon {
+            color: $gray-color;
+            cursor: pointer;
+        }
+
+        .list-added-user {
+            max-height: 100px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            &::-webkit-scrollbar {
+                width: 2px;
+                &:hover {
+                    width: 4px;
+                }
+            }
+            .added-user {
+                background-color: antiquewhite;
+                width: fit-content;
+                max-width: 100%;
+                border-radius: 10px;
+                user-select: none;
+
+                .username {
+                    word-wrap: break-word;
+                    overflow: hidden;
+                }
+
+                & + .added-user {
+                    margin-top: 4px;
+                }
+            }
+            .delete-icon {
+                cursor: pointer;
+            }
+        }
+    }
+}

@@ -1,0 +1,8 @@
+@use "variables" as *;
+
+.leave-room-modal {
+    .body {
+        background-color: $secondary-color;
+        border-radius: 4px;
+    }
+}
