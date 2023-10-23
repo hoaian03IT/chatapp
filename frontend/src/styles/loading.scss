@@ -1,0 +1,51 @@
+@use "variables" as *;
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading {
+    position: relative;
+    &.sm {
+        height: 24px;
+        width: 24px;
+    }
+    &.medium {
+        height: 48px;
+        width: 48px;
+    }
+    &.large {
+        height: 92px;
+        width: 92px;
+    }
+
+    .loading-spinner {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-width: 3px;
+        border-style: solid;
+        border-color: $white-color transparent $white-color transparent;
+        border-radius: 50%;
+
+        animation: spin 2s linear infinite;
+    }
+
+    .loading-spinner-reverse {
+        position: absolute;
+        top: 10px;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        border-width: 3px;
+        border-style: solid;
+        border-color: $white-color transparent $white-color transparent;
+        border-radius: 50%;
+
+        animation: spin 1.9s reverse linear infinite;
+    }
+}

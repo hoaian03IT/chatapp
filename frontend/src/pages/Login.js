@@ -1,12 +1,15 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button, Form, Image } from "react-bootstrap";
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineInfoCircle } from "react-icons/ai";
 import logoImage from "../assets/images/pinterest_profile_image.png";
-
 import { validateInput } from "../utils/validateInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "../styles/login_register_page.scss";
+import { loginUser } from "../app/api";
+import { useDispatch, useSelector } from "react-redux";
+import { $auth } from "../app/selectors/authSelector";
+import { Loading } from "../components/Loading";
 
 export const Login = () => {
     const [email, setEmail] = useState("");
@@ -15,29 +18,44 @@ export const Login = () => {
     const [isValidEmail, setIsValidEmail] = useState(true);
     const [isValidPassword, setIsValidPassword] = useState(true);
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const { isFetching, messageError, error } = useSelector($auth);
+
+    // notice error after hit login button
+    useEffect(() => {
+        console.log(messageError);
+        if (error && messageError === "Email is wrong") setIsValidEmail(false);
+        else if (error && messageError === "Password is wrong") setIsValidPassword(false);
+    }, [messageError, error]);
+
     const handlePassword = () => {
         setShowPassword(!showPassword);
     };
 
     const handleSubmit = useCallback(
-        (e) => {
+        async (e) => {
             e.preventDefault();
-            const validEmail = validateInput("email", email);
-            const validPass = validateInput("password", password);
+            if (!isFetching) {
+                const validEmail = validateInput("email", email);
+                const validPass = validateInput("password", password);
 
-            if (validEmail && validPass) {
-                setIsValidEmail(true);
-                setIsValidPassword(true);
-                console.log("sending request...");
-            } else {
-                if (!validEmail) setIsValidEmail(false);
-                else setIsValidEmail(true);
+                if (validEmail && validPass) {
+                    setIsValidEmail(true);
+                    setIsValidPassword(true);
 
-                if (!validPass) setIsValidPassword(false);
-                else setIsValidPassword(true);
+                    loginUser({ email, password }, dispatch, navigate);
+                } else {
+                    if (!validEmail) setIsValidEmail(false);
+                    else setIsValidEmail(true);
+
+                    if (!validPass) setIsValidPassword(false);
+                    else setIsValidPassword(true);
+                }
             }
         },
-        [email, password]
+        [dispatch, email, isFetching, navigate, password]
     );
 
     return (
@@ -75,8 +93,12 @@ export const Login = () => {
                         <AiOutlineEyeInvisible className="icon-password fs-4" onClick={handlePassword} />
                     )}
                 </Form.Group>
-                <Button variant="primary" type="submit" className="submit-btn" onClick={(e) => handleSubmit(e)}>
-                    Login
+                <Button
+                    variant="primary"
+                    type="submit"
+                    className={isFetching ? "submit-btn btn-medium disabled" : "submit-btn btn-medium"}
+                    onClick={(e) => handleSubmit(e)}>
+                    {isFetching ? <Loading /> : <span>Login</span>}
                 </Button>
                 <div>
                     Don't have an account? <Link to="/chat/register">Register</Link>
