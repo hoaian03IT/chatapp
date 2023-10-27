@@ -1,14 +1,23 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Button, Form, Image, Modal } from "react-bootstrap";
-import { ProviderContext } from "./Provider";
+import { useDispatch, useSelector } from "react-redux";
 import { TextAreaLimitWord } from "./TextAreaLimitWord";
+import { $auth } from "../app/selectors/authSelector";
+import { Loading } from "../components/Loading";
+import { updateProfile } from "../app/api";
+import { createAxios } from "../utils/createInstance";
 
 import "../styles/edit_profile_modal.scss";
+import { loginSuccess } from "../app/slices/authSlice";
 
 export const EditProfileModal = ({ show, onHide }) => {
-    const { username, avatar, bio, setBio, setAvatar } = useContext(ProviderContext);
-    const [image, setImage] = useState(avatar);
-    const [newBio, setNewBio] = useState(bio);
+    const { currentUser, isFetching } = useSelector($auth);
+
+    const [username] = useState(currentUser?.username);
+    const [avatar, setAvatar] = useState(currentUser?.avatar);
+    const [bio, setBio] = useState(currentUser?.bio);
+
+    const dispatch = useDispatch();
 
     const inputFileRef = useRef();
 
@@ -23,18 +32,26 @@ export const EditProfileModal = ({ show, onHide }) => {
         reader.onerror = () => console.log("file reading has failed");
         reader.onload = () => {
             const binaryStr = reader.result;
-            setImage(binaryStr);
+            setAvatar(binaryStr);
         };
         reader.readAsDataURL(file);
     };
 
-    // useEffect(() => console.log(base64), [base64]);
-
-    const handleUpdate = (e) => {
+    const handleUpdate = async (e) => {
         e.preventDefault();
-        if (newBio !== bio) setBio(newBio);
-        if (avatar !== image) setAvatar(image);
-        alert("Uploaded");
+        await updateProfile(
+            { avatar, bio: bio.trim() },
+            dispatch,
+            currentUser.token,
+            createAxios(currentUser, dispatch, loginSuccess)
+        );
+        setBio(bio.trim());
+        onHide();
+    };
+
+    const cancelUpdate = () => {
+        setAvatar(currentUser?.avatar);
+        setBio(currentUser?.bio);
         onHide();
     };
 
@@ -46,11 +63,7 @@ export const EditProfileModal = ({ show, onHide }) => {
             <Modal.Body className="body">
                 <form onSubmit={(e) => handleUpdate(e)}>
                     <div className="my-2 text-center">
-                        <Image
-                            src={image || avatar}
-                            className="avatar-user avatar-huge"
-                            onClick={handleOpenFileChooser}
-                        />
+                        <Image src={avatar} className="avatar-user avatar-huge" onClick={handleOpenFileChooser} />
                         <Form.Control
                             ref={inputFileRef}
                             className="d-none"
@@ -60,10 +73,12 @@ export const EditProfileModal = ({ show, onHide }) => {
                         />
                     </div>
                     <Form.Control className="input-username fw-semibold" type="text" value={username} disabled />
-                    <TextAreaLimitWord value={newBio} setValue={setNewBio} positionLimit="right" placeholder="Bio" />
+                    <TextAreaLimitWord value={bio} setValue={setBio} positionLimit="right" placeholder="Bio" />
                     <div className="mt-3 d-flex justify-content-center">
-                        <Button type="submit">Update</Button>
-                        <Button variant="link" onClick={onHide}>
+                        <Button type="submit" className={isFetching && "disabled"}>
+                            {isFetching ? <Loading /> : <span>Update</span>}
+                        </Button>
+                        <Button variant="link" onClick={cancelUpdate}>
                             Cancel
                         </Button>
                     </div>

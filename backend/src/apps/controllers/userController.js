@@ -45,6 +45,7 @@ class Controller {
     async register(req, res) {
         try {
             const saltRounds = 10;
+            const maxLengthUsername = 15;
             const { email, username, password } = req.body;
 
             const hasExistedEmail = await User.findOne({ email }).exec();
@@ -52,6 +53,9 @@ class Controller {
 
             const hasExistedUsername = await User.findOne({ username }).exec();
             if (hasExistedUsername) return res.status(403).json({ message: "Username is existed" });
+
+            if (username.length > maxLengthUsername)
+                return res.status(403).json({ message: `Username has maximum ${15} letters` });
 
             const hashPassword = await bcrypt.hash(password, saltRounds);
             const newUser = await User.create({ email, password: hashPassword, username });
@@ -78,7 +82,7 @@ class Controller {
         }
     }
 
-    // [post] /refresh
+    // [get] /refresh
     async requestRefreshToken(req, res) {
         try {
             const refreshToken = req.cookies.refreshToken;
@@ -111,6 +115,7 @@ class Controller {
         }
     }
 
+    // [post] /auth/logout
     async logout(req, res) {
         try {
             res.clearCookie("refreshToken");
@@ -121,13 +126,27 @@ class Controller {
         }
     }
 
-    // [get] /info
+    // [get] /auth/info
     async getInfo(req, res) {
         try {
             const user = await User.findById(req.user.id);
             if (!user) return res.status(404).json({ message: "User is not existed" });
             const { password, ...others } = user._doc;
-            res.status(200).json({ ...others });
+            res.status(200).json({ message: "Get info successfully!", ...others });
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+        }
+    }
+
+    // [post] /auth/update-profile
+    async updateProfile(req, res) {
+        try {
+            const { id } = req.user;
+            const { avatar, bio } = req.body;
+            await User.findByIdAndUpdate(id, { avatar: avatar, bio: bio }).exec();
+            const user = await User.findById(id);
+            const { password, ...others } = user._doc;
+            res.status(200).json({ message: "Updated profile successfully!", ...others });
         } catch (error) {
             res.status(400).json({ message: error.message });
         }
@@ -137,6 +156,15 @@ class Controller {
         try {
             await RefreshToken.deleteMany();
             res.status(200).json({ message: "Revoke successfully" });
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+        }
+    }
+
+    async destroyAllUser(req, res) {
+        try {
+            await User.deleteMany();
+            res.status(200).json({ message: "Destroy successfully" });
         } catch (error) {
             res.status(400).json({ message: error.message });
         }

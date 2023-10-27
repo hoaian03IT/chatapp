@@ -1,22 +1,38 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
-import { UserInfo } from "./UserInfo";
 import { AiOutlinePlus } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
-import "../styles/sidebar.scss";
+import { UserInfo } from "./UserInfo";
 import { RoomList } from "./RoomList";
-import { useContext, useState } from "react";
-import { ProviderContext } from "./Provider";
 import { EditProfileModal } from "./EditProfileModal";
 import { CreateRoomModal } from "./CreateRoomModal";
+import { $auth } from "../app/selectors/authSelector";
+import { createAxios } from "../utils/createInstance";
+
+import "../styles/sidebar.scss";
+import { logOutUser } from "../app/api";
+import { Loading } from "./Loading";
 
 export const Sidebar = () => {
-    const { username, avatar } = useContext(ProviderContext);
+    const { currentUser, isFetching } = useSelector($auth);
+
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
     const [showCreateModal, setShowCreateModal] = useState(false);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const axiosJWT = createAxios(currentUser, dispatch);
+
+    const handleLogOut = () => {
+        logOutUser(dispatch, navigate, axiosJWT);
+    };
+
     return (
         <section className="sidebar h-100 d-flex flex-column w-100">
             <header className="header p-4 d-flex justify-content-between flex-wrap">
-                <UserInfo size="large" username={username} avatar={avatar} />
+                <UserInfo size="large" username={currentUser?.username} avatar={currentUser?.avatar} />
                 <div className="my-1 w-100 d-flex align-items-center justify-content-center">
                     <Button
                         variant="outline"
@@ -24,8 +40,8 @@ export const Sidebar = () => {
                         onClick={() => setShowEditProfileModal(true)}>
                         Edit profile
                     </Button>
-                    <Button variant="outline" className="btn-logout btn-medium fw-semibold">
-                        Log out
+                    <Button variant="outline" className="btn-logout btn-medium fw-semibold" onClick={handleLogOut}>
+                        {isFetching ? <Loading /> : <span>Log out</span>}
                     </Button>
                 </div>
             </header>

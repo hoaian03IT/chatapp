@@ -1,5 +1,4 @@
 import { Image } from "react-bootstrap";
-import defaultAvatar from "../assets/images/default_avatar.png";
 
 // size = {small, medium, large}
 
@@ -9,8 +8,8 @@ export const UserInfo = ({ size = "medium", username, avatar, onClick }) => {
 
     return (
         <section className="user-info d-flex align-items-center" onClick={onClick}>
-            <Image className={`avatar avatar-${size}`} src={avatar || defaultAvatar} />
-            <span className={`username ms-2 fw-semibold ${fontSizeClass}`}>{username || "_username_"}</span>
+            <Image className={`avatar avatar-${size}`} src={avatar} />
+            <span className={`username ms-2 fw-semibold ${fontSizeClass}`}>{username}</span>
         </section>
     );
 };

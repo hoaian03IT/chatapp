@@ -15,9 +15,15 @@ connectToDB();
 
 app.use(express.static(path.resolve("./public")));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cookieParser());
-app.use(cors());
+const corsOptions = {
+    origin: "http://localhost:3000",
+    credentials: true,
+    optionSuccessStatus: 200,
+    methods: "GET,PUT,POST,DELETE",
+};
+app.use(cors(corsOptions));
 
 route(app);
 

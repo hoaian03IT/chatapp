@@ -1,4 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { loginReducer } from "../reducers/login";
+import { registerReducer } from "../reducers/register";
+import { updateProfileReducer } from "../reducers/updateProfile";
+import { logoutReducer } from "../reducers/logOut";
 
 export const authSlice = createSlice({
     name: "auth",
@@ -9,37 +13,32 @@ export const authSlice = createSlice({
         error: false,
     },
     reducers: {
-        loginRequest: (state) => {
-            state.isFetching = true;
-            state.error = false;
-        },
-        loginSuccess: (state, action) => {
-            state.isFetching = false;
-            state.currentUser = action.payload;
-            state.error = false;
-        },
-        loginFailed: (state, action) => {
-            state.isFetching = false;
-            state.messageError = action.payload?.message;
-            state.error = true;
-        },
-        registerRequest: (state) => {
-            state.isFetching = true;
-            state.error = false;
-        },
-        registerSuccess: (state, action) => {
-            state.isFetching = false;
-            state.currentUser = action.payload;
-            state.error = false;
-        },
-        registerFailed: (state, action) => {
-            state.isFetching = false;
-            state.messageError = action.payload?.message;
-            state.error = true;
-        },
+        // login
+        ...loginReducer,
+
+        // register
+        ...registerReducer,
+
+        // update profile
+        ...updateProfileReducer,
+
+        // log out
+        ...logoutReducer,
     },
 });
 
-export const { loginRequest, loginSuccess, loginFailed, registerRequest, registerSuccess, registerFailed } =
-    authSlice.actions;
+export const {
+    loginRequest,
+    loginSuccess,
+    loginFailed,
+    registerRequest,
+    registerSuccess,
+    registerFailed,
+    updateProfileRequest,
+    updateProfileSuccess,
+    updateProfileFailed,
+    logOutRequest,
+    logOutSuccess,
+    logOutFailed,
+} = authSlice.actions;
 export default authSlice.reducer;

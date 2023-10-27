@@ -1,14 +1,15 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { BiErrorAlt } from "react-icons/bi";
-import { useContext, useEffect, useState } from "react";
-import { ProviderContext } from "../components/Provider";
-import defaultAvatar from "../assets/images/default_avatar.png";
+import { $auth } from "../app/selectors/authSelector";
+
 import "../styles/message.scss";
 
 export const Message = ({ sender, avatar, message, status }) => {
-    const { username } = useContext(ProviderContext);
+    const { currentUser } = useSelector($auth);
     const [statusElement, setStatusElement] = useState("");
-    const isMe = sender === username;
+    const isMe = sender === currentUser?.username;
 
     useEffect(() => {
         status === "success"
@@ -25,11 +26,11 @@ export const Message = ({ sender, avatar, message, status }) => {
                 <Row>
                     {!isMe && (
                         <Col md={1} className="align-items-center">
-                            <Image className="avatar-medium" src={avatar || defaultAvatar} />
+                            <Image className="avatar-medium" src={avatar} />
                         </Col>
                     )}
                     <Col
-                        md={sender === username ? { span: 6, offset: 6 } : 6}
+                        md={isMe ? { span: 6, offset: 6 } : 6}
                         className={`d-flex align-items-${isMe ? "end" : "start"} flex-column`}>
                         <div className="message-item">{message}</div>
                         {isMe && <div className="message-status">{statusElement}</div>}

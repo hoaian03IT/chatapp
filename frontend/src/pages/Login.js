@@ -25,7 +25,6 @@ export const Login = () => {
 
     // notice error after hit login button
     useEffect(() => {
-        console.log(messageError);
         if (error && messageError === "Email is wrong") setIsValidEmail(false);
         else if (error && messageError === "Password is wrong") setIsValidPassword(false);
     }, [messageError, error]);
