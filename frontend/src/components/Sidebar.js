@@ -13,7 +13,6 @@ import { createAxios } from "../utils/createInstance";
 
 import "../styles/sidebar.scss";
 import { logOutUser } from "../app/api";
-import { Loading } from "./Loading";
 
 export const Sidebar = () => {
     const { currentUser, isFetching } = useSelector($auth);
@@ -26,7 +25,7 @@ export const Sidebar = () => {
     const axiosJWT = createAxios(currentUser, dispatch);
 
     const handleLogOut = () => {
-        logOutUser(dispatch, navigate, axiosJWT);
+        logOutUser(dispatch, navigate, currentUser.token, axiosJWT);
     };
 
     return (
@@ -40,8 +39,15 @@ export const Sidebar = () => {
                         onClick={() => setShowEditProfileModal(true)}>
                         Edit profile
                     </Button>
-                    <Button variant="outline" className="btn-logout btn-medium fw-semibold" onClick={handleLogOut}>
-                        {isFetching ? <Loading /> : <span>Log out</span>}
+                    <Button
+                        variant="outline"
+                        className={
+                            isFetching
+                                ? "btn-logout btn-medium fw-semibold"
+                                : "btn-logout btn-medium fw-semibold disable"
+                        }
+                        onClick={handleLogOut}>
+                        Log out
                     </Button>
                 </div>
             </header>

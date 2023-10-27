@@ -1,21 +1,32 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.scss";
-import { Login } from "./pages/Login";
-import { Register } from "./pages/Register";
-import { Chat } from "./pages/Chat";
+
 import { ProfileModal } from "./components/ProfileModal";
+import { PrivateRoute } from "./components/PrivateRoute";
+import { publicRoutes } from "./config/routes";
+
+import "./App.scss";
 
 function App() {
     return (
         <BrowserRouter>
             <div className="App">
                 <Routes>
-                    <Route path="/chat" element={<Chat />} />
-                    <Route path="/chat/login" element={<Login />} />
-                    <Route path="/chat/register" element={<Register />} />
+                    {publicRoutes.map((route) => {
+                        const Element = route.component;
+                        return (
+                            <Route
+                                key={route.path}
+                                path={route.path}
+                                element={
+                                    <PrivateRoute>
+                                        <Element />
+                                    </PrivateRoute>
+                                }
+                            />
+                        );
+                    })}
                 </Routes>
             </div>
-
             <ProfileModal />
         </BrowserRouter>
     );

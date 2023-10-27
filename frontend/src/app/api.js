@@ -64,10 +64,14 @@ export const updateProfile = async (payload, dispatch, token, axiosJWT) => {
     }
 };
 
-export const logOutUser = async (dispatch, navigate, axiosJWT) => {
+export const logOutUser = async (dispatch, navigate, token, axiosJWT) => {
     dispatch(logOutRequest());
     try {
-        const res = await axiosJWT.post("/user/auth/logout");
+        const res = await axiosJWT.post("/user/auth/logout", null, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         dispatch(logOutSuccess(res.data));
         navigate("/chat/login");
     } catch (error) {

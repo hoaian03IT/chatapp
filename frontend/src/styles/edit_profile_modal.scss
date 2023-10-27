@@ -16,7 +16,7 @@
     }
 
     .input-username {
-        background-color: $light-blue-color;
+        background-color: rgba($color: $light-blue-color, $alpha: 0.5) !important;
         border-color: transparent;
     }
 }
