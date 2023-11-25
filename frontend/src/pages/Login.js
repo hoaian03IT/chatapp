@@ -8,8 +8,9 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/login_register_page.scss";
 import { loginUser } from "../app/api";
 import { useDispatch, useSelector } from "react-redux";
-import { $auth } from "../app/selectors/authSelector";
+import { $auth } from "../app/selectors";
 import { Loading } from "../components/Loading";
+import { pathname } from "../config/pathname";
 
 export const Login = () => {
     const [email, setEmail] = useState("");
@@ -100,7 +101,7 @@ export const Login = () => {
                     {isFetching ? <Loading /> : <span>Login</span>}
                 </Button>
                 <div>
-                    Don't have an account? <Link to="/chat/register">Register</Link>
+                    Don't have an account? <Link to={pathname.register}>Register</Link>
                 </div>
             </form>
         </section>

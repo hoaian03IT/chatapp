@@ -8,8 +8,8 @@ import { UserInfo } from "./UserInfo";
 import { RoomList } from "./RoomList";
 import { EditProfileModal } from "./EditProfileModal";
 import { CreateRoomModal } from "./CreateRoomModal";
-import { $auth } from "../app/selectors/authSelector";
-import { createAxios } from "../utils/createInstance";
+import { $auth } from "../app/selectors";
+import { createAxiosRequest } from "../utils/createInstance";
 
 import "../styles/sidebar.scss";
 import { logOutUser } from "../app/api";
@@ -22,10 +22,10 @@ export const Sidebar = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const axiosJWT = createAxios(currentUser, dispatch);
+    const axiosJWT = createAxiosRequest(currentUser, dispatch, navigate);
 
     const handleLogOut = () => {
-        logOutUser(dispatch, navigate, currentUser.token, axiosJWT);
+        logOutUser(dispatch, navigate, axiosJWT);
     };
 
     return (

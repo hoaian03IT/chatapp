@@ -7,9 +7,11 @@ import "../styles/login_register_page.scss";
 import { validateInput } from "../utils/validateInput";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { $auth } from "../app/selectors/authSelector";
+import { $auth } from "../app/selectors";
 import { registerUser } from "../app/api";
 import { Loading } from "../components/Loading";
+import { pathname } from "../config/pathname";
+import { runToast } from "../utils/handleToast";
 
 export const Register = () => {
     const [email, setEmail] = useState("");
@@ -66,17 +68,30 @@ export const Register = () => {
 
                     registerUser({ email, username, password }, dispatch, navigate);
                 } else {
-                    if (!validEmail) setIsValidEmail(false);
-                    else setIsValidEmail(true);
+                    if (!validEmail) {
+                        setIsValidEmail(false);
+                    } else {
+                        setIsValidEmail(true);
+                    }
 
-                    if (!validPass) setIsValidPassword(false);
-                    else setIsValidPassword(true);
+                    if (!validPass) {
+                        setIsValidPassword(false);
+                    } else {
+                        setIsValidPassword(true);
+                    }
 
-                    if (!validConfirmPass) setIsValidConfirmPassword(false);
-                    else setIsValidConfirmPassword(true);
+                    if (!validConfirmPass) {
+                        setIsValidConfirmPassword(false);
+                    } else {
+                        setIsValidConfirmPassword(true);
+                    }
 
-                    if (!validUsername) setIsValidUsername(false);
-                    else setIsValidUsername(true);
+                    if (!validUsername) {
+                        setIsValidUsername(false);
+                    } else {
+                        setIsValidUsername(true);
+                    }
+                    runToast("error", "Register failed");
                 }
             }
         },
@@ -129,7 +144,7 @@ export const Register = () => {
                         <AiOutlineEyeInvisible className="icon-password fs-4" onClick={handlePassword} />
                     )}
                 </Form.Group>
-                <Form.Group className="form-group password">
+                <Form.Group className="form-group confirm-password">
                     <Form.Control
                         className="input input-password"
                         type={showConfirmPassword ? "text" : "password"}
@@ -155,7 +170,7 @@ export const Register = () => {
                     {isFetching ? <Loading /> : <span>Register</span>}
                 </Button>
                 <div>
-                    Have an account? Go to <Link to="/chat/login">Login</Link>
+                    Have an account? Go to <Link to={pathname.login}>Login</Link>
                 </div>
             </form>
         </section>

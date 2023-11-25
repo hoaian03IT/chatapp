@@ -2,13 +2,14 @@ import { useRef, useState } from "react";
 import { Button, Form, Image, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { TextAreaLimitWord } from "./TextAreaLimitWord";
-import { $auth } from "../app/selectors/authSelector";
+import { $auth } from "../app/selectors";
 import { Loading } from "../components/Loading";
 import { updateProfile } from "../app/api";
-import { createAxios } from "../utils/createInstance";
+import { createAxiosRequest } from "../utils/createInstance";
 
 import "../styles/edit_profile_modal.scss";
 import { loginSuccess } from "../app/slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 export const EditProfileModal = ({ show, onHide }) => {
     const { currentUser, isFetching } = useSelector($auth);
@@ -18,6 +19,7 @@ export const EditProfileModal = ({ show, onHide }) => {
     const [bio, setBio] = useState(currentUser?.bio);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const inputFileRef = useRef();
 
@@ -39,12 +41,8 @@ export const EditProfileModal = ({ show, onHide }) => {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        await updateProfile(
-            { avatar, bio: bio.trim() },
-            dispatch,
-            currentUser.token,
-            createAxios(currentUser, dispatch, loginSuccess)
-        );
+        const axiosJWT = createAxiosRequest(currentUser, dispatch, navigate, loginSuccess);
+        await updateProfile({ avatar, bio: bio.trim() }, dispatch, axiosJWT);
         setBio(bio.trim());
         onHide();
     };

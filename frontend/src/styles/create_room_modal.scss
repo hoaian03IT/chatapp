@@ -1,5 +1,7 @@
 @use "variables" as *;
 
+$max-height-list: 100px;
+
 .create-room-modal {
     .header,
     .body {
@@ -12,18 +14,46 @@
         .search-box {
             background-color: $white-color;
             border-radius: 4px;
-        }
-        .search-input {
-            border: none;
-        }
-        .clear-icon,
-        .search-icon {
-            color: $gray-color;
-            cursor: pointer;
+
+            .search-input {
+                border: none;
+
+                &:focus ~ .search-list {
+                    display: block;
+                }
+            }
+            .clear-icon,
+            .search-icon {
+                color: $gray-color;
+                cursor: pointer;
+            }
+
+            .search-list {
+                display: none;
+                max-height: $max-height-list;
+                width: 100%;
+                color: $black-color;
+                background-color: $white-color;
+                border-radius: 4px;
+                transform: translateY(calc(100% + 2px));
+                overflow-x: hidden;
+                overflow-y: scroll;
+
+                &:active {
+                    display: block;
+                }
+
+                .search-item {
+                    &:hover {
+                        background-color: rgba($color: $black-color, $alpha: 0.1);
+                    }
+                    cursor: pointer;
+                }
+            }
         }
 
         .list-added-user {
-            max-height: 100px;
+            max-height: $max-height-list;
             overflow-x: hidden;
             overflow-y: auto;
             &::-webkit-scrollbar {

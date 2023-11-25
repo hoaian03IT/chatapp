@@ -1,6 +1,18 @@
 @use "variables" as *;
 
 .message {
+    .message-sender {
+        position: absolute;
+        max-width: 100%;
+        left: 4px;
+        top: 3px;
+        transform: translateY(-100%);
+        color: $white-color;
+        font-size: 12px;
+        text-overflow: ellipsis;
+        white-space: no-wrap;
+        overflow: hidden;
+    }
     .message-item {
         padding: 4px 8px;
         max-width: 100%;

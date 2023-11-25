@@ -1,26 +1,29 @@
-import { Col, Container, Row } from "react-bootstrap";
-import { ChatInfo } from "./ChatInfo";
+import { BsFillChatDotsFill } from "react-icons/bs";
+
 import { ChatBox } from "./ChatBox";
 
-const listMem = [
-    { id: 0, username: "david", avatar: null },
-    { id: 1, username: "silva", avatar: null },
-    { id: 2, username: "ronall", avatar: null },
-];
+import "../styles/chat_window.scss";
+import { useContext, useEffect } from "react";
+import { ChatContext } from "../pages/Chat";
+import { useParams } from "react-router-dom";
 
 export const ChatWindow = () => {
+    const { currentRoom, setCurrentRoom } = useContext(ChatContext);
+    const { room } = useParams();
+    useEffect(() => {
+        if (room && room !== "all") setCurrentRoom(room);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     return (
         <section className="chat-window">
-            <Container fluid className="g-0">
-                <Row className="g-0">
-                    <Col md={9}>
-                        <ChatBox quantityMem={listMem.length} />
-                    </Col>
-                    <Col md={3}>
-                        <ChatInfo listMembers={listMem} />
-                    </Col>
-                </Row>
-            </Container>
+            {currentRoom ? (
+                <ChatBox />
+            ) : (
+                <div className="mt-5 empty-chatbox w-100 text-center">
+                    <p className="title fs-3">Open room to chat</p>
+                    <BsFillChatDotsFill className="icon-inbox" />
+                </div>
+            )}
         </section>
     );
 };

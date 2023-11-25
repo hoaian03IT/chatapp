@@ -7,18 +7,22 @@ $max-height-input: 80px;
     height: 100vh;
     .header {
         max-height: $max-height-header;
+        border-bottom: 2px solid $separator-color;
         background-color: #0a2c3d99;
         box-shadow: 0px 2px 10px 0px #0a2c3d99;
 
         .wrapper-header {
-            border-bottom: 2px solid $separator-color;
             .room-pic {
                 border: 1px solid $secondary-color;
             }
-            .name,
-            .quantity-member {
+            .name {
                 color: $white-color;
             }
+        }
+
+        .icon-more-info {
+            fill: $white-color;
+            cursor: pointer;
         }
     }
     .messages {

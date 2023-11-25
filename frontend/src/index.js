@@ -9,7 +9,9 @@ import storage from "redux-persist/lib/storage";
 import rootReducer from "./app/reducers";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { Provider as ProviderTemporary } from "./components/Provider";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter } from "react-router-dom";
 
 const persistConfig = {
     key: "root",
@@ -35,9 +37,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-            <ProviderTemporary>
+            <BrowserRouter>
                 <App />
-            </ProviderTemporary>
+            </BrowserRouter>
         </PersistGate>
     </Provider>
 );

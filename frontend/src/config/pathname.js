@@ -1,5 +1,6 @@
 export const pathname = {
-    chat: "/chat",
-    login: "/chat/login",
-    register: "/chat/register",
+    onlyChat: "/chat",
+    chat: "/chat/:room",
+    login: "/login",
+    register: "/register",
 };

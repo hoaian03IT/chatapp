@@ -1,21 +1,26 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { $auth } from "../app/selectors/authSelector";
+
+import { $auth } from "../app/selectors";
+import { pathname as path } from "../config/pathname";
 
 export const PrivateRoute = ({ children }) => {
     const { currentUser } = useSelector($auth);
-    const { pathname } = useLocation();
+    const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
-        const shortestPathname =
-            pathname[pathname.length - 1] === "/" ? pathname.slice(0, pathname.length - 1) : pathname;
-
-        if (!currentUser && shortestPathname === "/chat") navigate("/chat/login");
-        if (currentUser && (shortestPathname === "/chat/login" || shortestPathname === "/chat/register"))
-            navigate("/chat");
-    }, [currentUser, pathname, navigate]);
+        if (currentUser && (location.pathname.includes(path.login) || location.pathname.includes(path.register))) {
+            navigate(path.onlyChat + "/all");
+        } else if (
+            !currentUser &&
+            !location.pathname.includes(path.login) &&
+            !location.pathname.includes(path.register)
+        ) {
+            navigate(path.login);
+        }
+    }, [currentUser, location.pathname, navigate]);
 
     return children;
 };

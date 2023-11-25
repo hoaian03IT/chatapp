@@ -1,0 +1,15 @@
+@use "variables" as *;
+
+.chat-window {
+    height: 100vh;
+    .empty-chatbox {
+        .title {
+            color: $white-color;
+        }
+        .icon-inbox {
+            fill: rgba($color: $white-color, $alpha: 0.7);
+            height: 6%;
+            width: 6%;
+        }
+    }
+}
