@@ -70,12 +70,14 @@ export const Register = () => {
                 } else {
                     if (!validEmail) {
                         setIsValidEmail(false);
+                        runToast("error", "Invalid email");
                     } else {
                         setIsValidEmail(true);
                     }
 
                     if (!validPass) {
                         setIsValidPassword(false);
+                        runToast("error", "Invalid password");
                     } else {
                         setIsValidPassword(true);
                     }
@@ -91,7 +93,6 @@ export const Register = () => {
                     } else {
                         setIsValidUsername(true);
                     }
-                    runToast("error", "Register failed");
                 }
             }
         },

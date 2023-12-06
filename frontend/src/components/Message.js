@@ -33,7 +33,7 @@ export const Message = ({ sender, avatar, message, status }) => {
                         md={isMe ? { span: 6, offset: 6 } : 6}
                         className={`g-0 position-relative d-flex align-items-${isMe ? "end" : "start"} flex-column`}>
                         {!isMe && <div className="message-sender">{sender}</div>}
-                        <div className="message-item">{message}</div>
+                        <div className="message-item p-3">{message}</div>
                         {isMe && <div className="message-status">{statusElement}</div>}
                     </Col>
                 </Row>

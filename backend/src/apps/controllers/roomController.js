@@ -2,7 +2,14 @@ import mongoose from "mongoose";
 
 import Room from "../models/roomModel.js";
 import RoomParticipant from "../models/roomParticipantModel.js";
-import User from "../models/userModel.js";
+import Message from "../models/messageModel.js";
+
+async function destroyRoom(idRoom) {
+    try {
+        await Room.findByIdAndDelete(new mongoose.Types.ObjectId(idRoom));
+        await Message.deleteMany({ room: new mongoose.Types.ObjectId(idRoom) });
+    } catch (error) {}
+}
 
 class Controller {
     // [post] /v/create
@@ -10,6 +17,9 @@ class Controller {
         try {
             const { _id, username } = req.user;
             let { addedUsers } = req.body;
+
+            if (!addedUsers) return res.status(400).json({ message: "Cannot create room" });
+
             addedUsers = [...addedUsers, { _id, username }];
 
             const nameRoom = addedUsers.reduce((acc, curr) => acc + curr.username + ", ", "");
@@ -42,7 +52,6 @@ class Controller {
                 { $lookup: { from: "rooms", localField: "room", foreignField: "_id", as: "room-info" } },
             ]);
 
-            console.log(response);
             const rooms = response
                 .map((item) => {
                     const [room] = item["room-info"];
@@ -97,12 +106,23 @@ class Controller {
         try {
             const { idRoom } = req.body;
             const { _id: idUser } = req.user;
-            await RoomParticipant.findOneAndDelete({
+
+            if (!idRoom || !idUser) return res.status(400).json({ message: "Something wrong happened" });
+
+            const response = await RoomParticipant.findOneAndDelete({
                 room: new mongoose.Types.ObjectId(idRoom),
                 user: new mongoose.Types.ObjectId(idUser),
             });
 
-            res.status(200).json({ message: "Leave room successful!" });
+            if (response) res.status(200).json({ message: "Leave room successful!" });
+            else res.status(400).json({ message: "Something wrong happened" });
+
+            // clear room if no one in room
+            const hasAnyOne = await RoomParticipant.find({ room: new mongoose.Types.ObjectId(idRoom) });
+
+            if (hasAnyOne.length === 0) {
+                await destroyRoom(idRoom);
+            }
         } catch (error) {
             res.status(400).json({ message: error.message });
         }
@@ -114,7 +134,6 @@ class Controller {
             await RoomParticipant.deleteMany();
             res.status(200).send("Cleared");
         } catch (error) {
-            console.log(error);
             res.status(400).json({ message: error.message });
         }
     }

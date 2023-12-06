@@ -3,14 +3,14 @@ import { Image } from "react-bootstrap";
 import { memo, useContext, useEffect } from "react";
 
 import { $auth, $room } from "../app/selectors";
-import { fetchMembers, fetchMessages, fetchRooms } from "../app/api";
+import { fetchRooms } from "../app/api";
 import { createAxiosRequest } from "../utils/createInstance";
 import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "../app/slices/authSlice";
-
-import "../styles/roomlist.scss";
 import { ChatContext, SocketContext } from "../pages/Chat";
 import { pathname } from "../config/pathname";
+
+import "../styles/roomlist.scss";
 
 export const RoomList = memo(() => {
     const { currentUser } = useSelector($auth);
@@ -35,7 +35,6 @@ export const RoomList = memo(() => {
 
     useEffect(() => {
         socket.current?.on("added-room", (data) => {
-            console.log(`You has been joined room ${data}`);
             socket.current.emit("join-room", { room: data });
             fetchRoomsHandler();
         });

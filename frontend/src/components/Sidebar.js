@@ -25,7 +25,7 @@ export const Sidebar = () => {
     const axiosJWT = createAxiosRequest(currentUser, dispatch, navigate);
 
     const handleLogOut = () => {
-        logOutUser(dispatch, navigate, axiosJWT);
+        logOutUser(dispatch, axiosJWT);
     };
 
     return (

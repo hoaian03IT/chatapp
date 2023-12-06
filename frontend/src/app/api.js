@@ -44,7 +44,7 @@ export const loginUser = async (payload, dispatch, navigate) => {
     } catch (error) {
         const errorMessage = error?.response?.data.message || error.message;
         dispatch(loginFailed(errorMessage));
-        alert(errorMessage);
+        runToast("error", errorMessage);
     }
 };
 
@@ -61,7 +61,7 @@ export const registerUser = async (payload, dispatch, navigate) => {
     } catch (error) {
         const errorMessage = error?.response?.data.message || error.message;
         dispatch(registerFailed(errorMessage));
-        runToast(errorMessage);
+        runToast("error", errorMessage);
     }
 };
 
@@ -77,7 +77,7 @@ export const updateProfile = async (payload, dispatch, axiosJWT) => {
     }
 };
 
-export const logOutUser = async (dispatch, navigate, axiosJWT) => {
+export const logOutUser = async (dispatch, axiosJWT) => {
     dispatch(logOutRequest());
     try {
         const res = await axiosJWT.post("/auth/v/logout", null, {
@@ -99,7 +99,7 @@ export const refreshToken = async () => {
 
         return res;
     } catch (error) {
-        // alert("Refresh token: " + error?.response?.data.message || error.message);
+        runToast("error", error?.response?.data.message || error.message);
     }
 };
 
@@ -115,15 +115,13 @@ export const findUser = async (query) => {
 export const createRoom = async (dispatch, payload, axiosJWT) => {
     dispatch(createRoomRequest());
     try {
-        console.log(payload);
         const res = await axiosJWT.post("/room/v/create", payload);
         dispatch(createRoomSuccess(res.data));
         return res.data;
     } catch (error) {
-        console.log(error);
         const errorMessage = error?.response?.data.message || error.message;
         dispatch(createRoomFailed(errorMessage));
-        // alert("Create room: " + errorMessage);
+        runToast("error", "Create room: " + errorMessage);
     }
 };
 
@@ -135,7 +133,7 @@ export const fetchRooms = async (dispatch, axiosJWT) => {
     } catch (error) {
         const errorMessage = error?.response?.data.message || error.message;
         dispatch(registerFailed(errorMessage));
-        // alert("Fetch room: " + errorMessage);
+        runToast("error", "Fetch room: " + errorMessage);
     }
 };
 
@@ -178,7 +176,7 @@ export const getOneRoom = async (idRoom, dispatch, axiosJWT) => {
         dispatch(fetchOneRoomSuccess(res.data));
     } catch (error) {
         const errorMsg = error?.response?.data.message || error.message;
-        alert(errorMsg);
+        runToast("error", errorMsg);
         dispatch(fetchOneRoomFailed(errorMsg));
     }
 };
@@ -188,7 +186,7 @@ export const leaveRoom = async (idRoom, dispatch, navigate, axiosJWT) => {
         const res = await axiosJWT.post("/room/v/leave-room", { idRoom });
         runToast("success", res.data.message);
         await fetchRooms(dispatch, axiosJWT);
-        navigate(pathname.onlyChat + "/all");
+        navigate(`${pathname.onlyChat}/all`);
     } catch (error) {
         const errorMsg = error?.response?.data.message || error.message;
         runToast("error", errorMsg);

@@ -11,10 +11,10 @@ class Controller {
             const { email, password } = req.body;
 
             const userLogin = await User.findOne({ email: email }).exec();
-            if (!userLogin) return res.status(403).json({ message: "Email is wrong" });
+            if (!userLogin) return res.status(403).json({ message: "Email or password is wrong" });
 
             const isValidPw = await bcrypt.compare(password, userLogin.password);
-            if (!isValidPw) return res.status(403).json({ message: "Password is wrong" });
+            if (!isValidPw) return res.status(403).json({ message: "Email or password is wrong" });
 
             // create access token and refresh token
             const accessToken = generateAccessToken(userLogin);

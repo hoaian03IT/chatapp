@@ -11,7 +11,7 @@ import { leaveRoom } from "../app/api";
 
 export const LeaveRoomModal = ({ show, onHide }) => {
     const { currentUser } = useSelector($auth);
-    const { currentRoom: room } = useContext(ChatContext);
+    const { currentRoom: room, setCurrentRoom } = useContext(ChatContext);
     const { socket } = useContext(SocketContext);
 
     const dispatch = useDispatch();
@@ -19,9 +19,12 @@ export const LeaveRoomModal = ({ show, onHide }) => {
 
     const handleLeaveRoom = async () => {
         const axiosJWT = createAxiosRequest(currentUser, dispatch, navigate, loginSuccess);
-        await leaveRoom(room, dispatch, navigate, axiosJWT);
-        socket.current.emit("leave-room", room);
-        onHide();
+        try {
+            await leaveRoom(room, dispatch, navigate, axiosJWT);
+            setCurrentRoom(null);
+            socket.current.emit("leave-room", room);
+            onHide();
+        } catch (error) {}
     };
     return (
         <Modal className="leave-room-modal" show={show} onHide={onHide} size="sm" centered>
