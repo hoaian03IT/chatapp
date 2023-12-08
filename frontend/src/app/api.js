@@ -32,6 +32,33 @@ import { runToast } from "../utils/handleToast";
 
 axios.defaults.baseURL = process.env.REACT_APP_HOST;
 
+export const addFriend = async (id, axiosJWT) => {
+    try {
+        const res = await axiosJWT.post("/user/v/add-friend", { id });
+        runToast("success", res.data.message);
+    } catch (error) {
+        runToast("error", error?.response?.data.message || error.message);
+    }
+};
+
+export const unfriendApi = async (id, axiosJWT) => {
+    try {
+        const res = await axiosJWT.post("/user/v/unfriend", { id });
+        runToast("success", res.data.message);
+    } catch (error) {
+        runToast("error", error?.response?.data.message || error.message);
+    }
+};
+
+export const fetchUserInfo = async (id, axiosJWT) => {
+    try {
+        const res = await axiosJWT.get(`/user/v/info/${id}`);
+        return res.data;
+    } catch (error) {
+        runToast("error", error?.response?.data.message || error.message);
+    }
+};
+
 export const loginUser = async (payload, dispatch, navigate) => {
     dispatch(loginRequest());
     try {
@@ -108,7 +135,7 @@ export const findUser = async (query) => {
         const res = await axios.get(`/user/search?q=${query}`);
         return res.data.users;
     } catch (error) {
-        // alert("Find user: " + error?.response?.data.message || error.message);
+        runToast("error", error?.response?.data.message || error.message);
         return [];
     }
 };

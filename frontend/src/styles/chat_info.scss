@@ -13,6 +13,21 @@
             max-height: 90%;
             overflow-x: hidden;
             overflow-y: auto;
+            .item-member {
+                border-radius: 10px;
+                cursor: pointer;
+                transition: all 0.2s linear;
+
+                &:hover {
+                    background-color: rgba($color: $light-green-color, $alpha: 0.2);
+                }
+
+                &.not-hover {
+                    &:hover {
+                        background-color: none;
+                    }
+                }
+            }
         }
     }
 }

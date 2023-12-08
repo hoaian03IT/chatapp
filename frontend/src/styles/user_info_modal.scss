@@ -1,0 +1,13 @@
+.user-info-modal {
+    .username .text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .bio {
+        max-height: 400px;
+        .text {
+            word-wrap: break-word;
+        }
+    }
+}

@@ -17,27 +17,40 @@ export const ChatInfo = () => {
     const { participants } = useContext(ChatContext);
     const [userInfo, setUserInfo] = useState();
     const [showLeaveRoomModal, setShowLeaveRoomModal] = useState(false);
+    const [showUserInfoModal, setShowUserInfoModal] = useState(false);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const axiosJWT = createAxiosRequest(currentUser, dispatch, navigate, loginSuccess);
+
     const getInfoUser = useCallback(
         async (id) => {
-            const axiosJWT = createAxiosRequest(currentUser, dispatch, navigate, loginSuccess);
-            const { username, avatar, bio } = await fetchUserInfo(id, axiosJWT);
-            setUserInfo({ username, avatar, bio });
+            try {
+                if (id !== currentUser._id) {
+                    const { username, avatar, bio, isFriend, _id } = await fetchUserInfo(id, axiosJWT);
+                    setUserInfo({ username, avatar, bio, _id, isFriend });
+                    setShowUserInfoModal(true);
+                }
+            } catch (error) {}
         },
-        [currentUser, dispatch, navigate]
+        [axiosJWT, currentUser._id]
     );
 
     return (
         <section className="chat-info d-flex flex-column justify-content-between">
             <div className="chat-members">
                 <h3 className="title p-3 fw-bold">Chat members</h3>
-                <div className="list-members">
+                <div className="list-members mx-2">
                     {participants &&
                         participants.map((mem) => (
-                            <div key={mem._id} className="item-member px-3 py-2">
+                            <div
+                                key={mem._id}
+                                className={
+                                    currentUser._id === mem._id
+                                        ? "item-member not-hover px-3 py-2"
+                                        : "item-member px-3 py-2"
+                                }>
                                 <UserInfo
                                     size="medium"
                                     username={mem.username}
@@ -53,7 +66,12 @@ export const ChatInfo = () => {
                     Leave room
                 </Button>
             </div>
-            <UserInfoModal {...userInfo} />
+            <UserInfoModal
+                {...userInfo}
+                show={showUserInfoModal}
+                onHide={() => setShowUserInfoModal(false)}
+                axiosJWT={axiosJWT}
+            />
             <LeaveRoomModal show={showLeaveRoomModal} onHide={() => setShowLeaveRoomModal(false)} />
         </section>
     );

@@ -11,6 +11,10 @@ const userSchema = new Schema(
         },
         bio: { type: String, default: "" },
         password: { type: String, required: true },
+        friends: {
+            type: Array,
+            default: [],
+        },
     },
     {
         timestamps: true,

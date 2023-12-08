@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 
 const roomSchema = new Schema(
     {
+        owner: { type: Schema.Types.ObjectId, ref: "User" },
         nameRoom: { type: String, required: true },
         picRoom: {
             type: String,

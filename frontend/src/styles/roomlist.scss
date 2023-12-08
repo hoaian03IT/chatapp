@@ -5,9 +5,10 @@
     // overflow-x: hidden;
     overflow-y: auto;
     .room-item {
-        cursor: pointer;
         border-radius: 10px;
         user-select: none;
+        transition: all 0.2s linear;
+        cursor: pointer;
         &:hover {
             background-color: rgba($color: $primary-color, $alpha: 0.2);
         }

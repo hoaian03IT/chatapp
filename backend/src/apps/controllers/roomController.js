@@ -92,8 +92,8 @@ class Controller {
 
             participants = participants.map((participant) => {
                 const [info] = participant["user-info"];
-                const { username, avatar } = info;
-                return { username, avatar };
+                const { username, avatar, _id } = info;
+                return { username, avatar, _id };
             });
 
             res.status(200).json({ participants });
