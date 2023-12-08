@@ -14,7 +14,7 @@ export const UserInfo = memo(({ size = "medium", username, avatar, onClick }) =>
 
     return (
         <section className="user-info d-flex align-items-center" onClick={onClick}>
-            <Image className={`avatar avatar-${size}`} src={avatar} />
+            <Image roundedCircle className={`avatar avatar-${size}`} src={avatar} />
             <span className={`username ms-2 fw-semibold ${fontSizeClass}`}>
                 {username === currentUser?.username ? `${username} (You)` : username}
             </span>

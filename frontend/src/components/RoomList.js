@@ -16,7 +16,7 @@ export const RoomList = memo(() => {
     const { currentUser } = useSelector($auth);
     const { rooms } = useSelector($room);
     const { socket } = useContext(SocketContext);
-    const { setCurrentRoom } = useContext(ChatContext);
+    const { setCurrentRoom, currentRoom } = useContext(ChatContext);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -47,14 +47,16 @@ export const RoomList = memo(() => {
     };
 
     return (
-        <section className="room-list w-100">
+        <section className="room-list m-1">
             {rooms &&
                 rooms.map((room) => (
                     <div
                         key={room._id}
-                        className="room-item p-3 d-flex align-items-center"
+                        className={`room-item ${
+                            room._id === currentRoom ? "active" : ""
+                        } p-3 d-flex align-items-center`}
                         onClick={() => handleOpenRoom(room._id)}>
-                        <Image className="room-pic avatar-larger" src={room.picRoom} />
+                        <Image thumbnail roundedCircle className="room-pic avatar-larger" src={room.picRoom} />
                         <div className="room-content ms-3 d-flex flex-column">
                             <span className="room-name fw-semibold">{room.nameRoom}</span>
                             <span className="last-message fw-light">

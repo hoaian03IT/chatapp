@@ -2,13 +2,14 @@
 
 .textarea-limit-word {
     .textarea {
-        background-color: $light-blue-color !important;
-        border-color: transparent;
+        background-color: $light-green-color !important;
+        font-style: italic;
+        border: none;
     }
     .limit-words {
         bottom: 10px;
         font-size: 12px;
-        color: $dark-blue-color;
+        color: $green-color;
 
         &.left {
             left: 20px;

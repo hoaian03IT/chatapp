@@ -113,7 +113,9 @@ export const CreateRoomModal = ({ show, onHide }) => {
                     ))}
                 </div>
                 <div className="mt-1 text-center">
-                    <Button onClick={handleCreateRoom}>{isFetching ? <Loading /> : <span>Create</span>}</Button>
+                    <Button variant="secondary" onClick={handleCreateRoom}>
+                        {isFetching ? <Loading /> : <span>Create</span>}
+                    </Button>
                     <Button variant="link" onClick={onHide}>
                         Cancel
                     </Button>

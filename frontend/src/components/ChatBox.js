@@ -92,7 +92,7 @@ export const ChatBox = () => {
                             </div>
                         </div>
                         <div onClick={handleShowMembers}>
-                            <BsInfoCircle className="icon-more-info fs-4" />
+                            <BsInfoCircle className="icon-more-info fs-3" />
                         </div>
                     </header>
                     <div ref={chatBoxRef} className="messages py-2">

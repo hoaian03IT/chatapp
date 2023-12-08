@@ -23,8 +23,14 @@
 }
 
 .App {
-    background-color: $dark-blue-color;
+    background-color: $green-color;
+    background-image: url("./assets/images/background.png");
     height: 100vh;
+}
+
+.modal-content {
+    border-radius: 20px !important;
+    overflow: hidden !important;
 }
 
 .form-control {
@@ -38,7 +44,12 @@
 
     // variant
     &-primary {
-        background-color: $primary-color !important;
+        background-image: linear-gradient(
+            to right,
+            rgba($color: $primary-color, $alpha: 0.9),
+            rgba($color: $primary-color, $alpha: 1.1)
+        ) !important;
+        border: none !important;
     }
 
     &-outline {
@@ -48,6 +59,14 @@
         &:hover {
             border-color: $primary-color !important;
         }
+    }
+    &-secondary {
+        background-image: linear-gradient(
+            to right,
+            rgba($color: $light-green-color, $alpha: 0.8),
+            rgba($color: $green-color, $alpha: 1.1)
+        ) !important;
+        border: none !important;
     }
 
     // size

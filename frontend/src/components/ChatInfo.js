@@ -1,15 +1,34 @@
 import { Button } from "react-bootstrap";
-import "../styles/chat_info.scss";
-import { UserInfo } from "./UserInfo";
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { LeaveRoomModal } from "./LeaveRoomModal";
+import { UserInfo } from "./UserInfo";
 import { ChatContext } from "../pages/Chat";
+import { UserInfoModal } from "./UserInfoModal";
+import { fetchUserInfo } from "../app/api";
+import { createAxiosRequest } from "../utils/createInstance";
 
+import "../styles/chat_info.scss";
+import { $auth } from "../app/selectors";
+import { loginSuccess } from "../app/slices/authSlice";
 export const ChatInfo = () => {
+    const { currentUser } = useSelector($auth);
     const { participants } = useContext(ChatContext);
+    const [userInfo, setUserInfo] = useState();
     const [showLeaveRoomModal, setShowLeaveRoomModal] = useState(false);
 
-    const getInfoUser = (username) => {};
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const getInfoUser = useCallback(
+        async (id) => {
+            const axiosJWT = createAxiosRequest(currentUser, dispatch, navigate, loginSuccess);
+            const { username, avatar, bio } = await fetchUserInfo(id, axiosJWT);
+            setUserInfo({ username, avatar, bio });
+        },
+        [currentUser, dispatch, navigate]
+    );
 
     return (
         <section className="chat-info d-flex flex-column justify-content-between">
@@ -18,12 +37,12 @@ export const ChatInfo = () => {
                 <div className="list-members">
                     {participants &&
                         participants.map((mem) => (
-                            <div key={mem.username} className="item-member px-3 py-2">
+                            <div key={mem._id} className="item-member px-3 py-2">
                                 <UserInfo
                                     size="medium"
                                     username={mem.username}
                                     avatar={mem.avatar}
-                                    onClick={() => getInfoUser(mem.username)}
+                                    onClick={() => getInfoUser(mem._id)}
                                 />
                             </div>
                         ))}
@@ -34,7 +53,7 @@ export const ChatInfo = () => {
                     Leave room
                 </Button>
             </div>
-
+            <UserInfoModal {...userInfo} />
             <LeaveRoomModal show={showLeaveRoomModal} onHide={() => setShowLeaveRoomModal(false)} />
         </section>
     );

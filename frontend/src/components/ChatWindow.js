@@ -19,8 +19,8 @@ export const ChatWindow = () => {
             {currentRoom ? (
                 <ChatBox />
             ) : (
-                <div className="mt-5 empty-chatbox w-100 text-center">
-                    <p className="title fs-3">Open room to chat</p>
+                <div className="mt-5 p-4 empty-chatbox">
+                    <p className="title fs-3 fw-bold">Open room to chat</p>
                     <BsFillChatDotsFill className="icon-inbox" />
                 </div>
             )}

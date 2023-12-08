@@ -19,17 +19,10 @@
         font-size: 16px;
         font-weight: normal;
         color: $white-color;
-        background-color: $secondary-color;
+        background-color: $primary-color;
         border-radius: 6px;
         overflow: hidden;
         word-wrap: break-word;
-
-        // &:first-of-type {
-        //     border-top-left-radius: 10px;
-        // }
-        // &:last-of-type {
-        //     border-bottom-left-radius: 10px;
-        // }
     }
     .message-status {
         color: $white-color;

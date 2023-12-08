@@ -33,10 +33,10 @@ export const FormInput = ({ submit, messageValue, setMessageValue }) => {
     return (
         <form className="form-input p-3 d-flex align-items-center" onSubmit={(e) => handleSubmit(e)}>
             <div className="emoji">
-                <BsEmojiSmile className="icon-emoji fs-3" onClick={handleTogglePickerTable} />
+                <BsEmojiSmile className="icon-emoji fs-2" onClick={handleTogglePickerTable} />
                 {showEmoji && (
                     <div className="picker-table">
-                        <Picker data={data} onEmojiSelect={handleSelectEmoji} />
+                        <Picker theme="light" data={data} onEmojiSelect={handleSelectEmoji} />
                     </div>
                 )}
             </div>

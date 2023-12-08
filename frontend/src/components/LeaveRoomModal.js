@@ -33,7 +33,9 @@ export const LeaveRoomModal = ({ show, onHide }) => {
                     <span className="fs-5">Do you want to leave this room?</span>
                 </div>
                 <div className="mt-3">
-                    <Button onClick={handleLeaveRoom}>Leave</Button>
+                    <Button variant="secondary" onClick={handleLeaveRoom}>
+                        Leave
+                    </Button>
                     <Button variant="link" onClick={onHide}>
                         Cancel
                     </Button>

@@ -3,12 +3,15 @@
 .edit-profile-modal {
     .header,
     .body {
-        background-color: $secondary-color;
-        border-color: $light-blue-color;
+        border: none;
+        background-color: $primary-color;
+        border-color: $light-green-color;
     }
 
     .body {
-        border-radius: 4px;
+        .input-username {
+            cursor: not-allowed;
+        }
     }
 
     .avatar-user {
@@ -16,7 +19,7 @@
     }
 
     .input-username {
-        background-color: rgba($color: $light-blue-color, $alpha: 0.5) !important;
+        background-color: rgba($color: $light-green-color, $alpha: 0.5) !important;
         border-color: transparent;
     }
 }

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { $auth } from "../app/selectors";
 import { Loading } from "../components/Loading";
 import { pathname } from "../config/pathname";
+import { runToast } from "../utils/handleToast";
 
 export const Login = () => {
     const [email, setEmail] = useState("");
@@ -47,11 +48,14 @@ export const Login = () => {
 
                     loginUser({ email, password }, dispatch, navigate);
                 } else {
-                    if (!validEmail) setIsValidEmail(false);
-                    else setIsValidEmail(true);
+                    if (!validEmail) {
+                        setIsValidEmail(false);
+                    } else setIsValidEmail(true);
 
-                    if (!validPass) setIsValidPassword(false);
-                    else setIsValidPassword(true);
+                    if (!validPass) {
+                        setIsValidPassword(false);
+                        runToast("error", "Password must be at least 8 characters");
+                    } else setIsValidPassword(true);
                 }
             }
         },
@@ -96,7 +100,7 @@ export const Login = () => {
                 <Button
                     variant="primary"
                     type="submit"
-                    className={isFetching ? "submit-btn btn-medium disabled" : "submit-btn btn-medium"}
+                    className={isFetching ? "my-3 submit-btn btn-medium disabled" : "my-3 submit-btn btn-medium"}
                     onClick={(e) => handleSubmit(e)}>
                     {isFetching ? <Loading /> : <span>Login</span>}
                 </Button>

@@ -166,7 +166,7 @@ export const Register = () => {
                 <Button
                     variant="primary"
                     type="submit"
-                    className={isFetching ? "submit-btn btn-medium disabled" : "submit-btn btn-medium"}
+                    className={isFetching ? "my-3 submit-btn btn-medium disabled" : "my-3 submit-btn btn-medium"}
                     onClick={(e) => handleSubmit(e)}>
                     {isFetching ? <Loading /> : <span>Register</span>}
                 </Button>

@@ -73,7 +73,7 @@ export const EditProfileModal = ({ show, onHide }) => {
                     <Form.Control className="input-username fw-semibold" type="text" value={username} disabled />
                     <TextAreaLimitWord value={bio} setValue={setBio} positionLimit="right" placeholder="Bio" />
                     <div className="mt-3 d-flex justify-content-center">
-                        <Button type="submit" className={isFetching && "disabled"}>
+                        <Button type="submit" variant="secondary" className={isFetching && "disabled"}>
                             {isFetching ? <Loading /> : <span>Update</span>}
                         </Button>
                         <Button variant="link" onClick={cancelUpdate}>

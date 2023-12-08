@@ -4,7 +4,6 @@
 .register-page {
     height: 100%;
     width: 100vw;
-
     .form {
         padding: 12px;
         position: fixed;
@@ -13,8 +12,9 @@
         transform: translate(-50%, -50%);
         max-width: $width-form;
         width: 100%;
-        background-color: $secondary-color;
+        background-color: #f3f5d5;
         border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 6px 2px;
         overflow: hidden;
 
         .logo-image {
@@ -27,11 +27,19 @@
         }
 
         .form-group {
+            margin-top: 4px;
             display: flex;
             align-items: center;
-            background-color: $light-blue-color;
+            background-color: #f3f5d5;
             border-color: rgba($color: #5cc2f2, $alpha: 0.8);
             border-radius: 4px;
+            box-shadow: rgba(0, 0, 0, 0.15) 1px 2px 1px 2px;
+            transition: all 0.1s ease-in;
+
+            &:focus-within {
+                box-shadow: rgba(0, 0, 0, 0.15) -0.5px 0px 1px 1px;
+                transform: translateY(1px);
+            }
             .input {
                 background-color: transparent;
                 border-color: transparent;
@@ -61,12 +69,11 @@
             margin-top: 8px;
             padding: 4px 8px;
             font-weight: 600;
-            box-shadow: rgba($color: $secondary-color, $alpha: 0.35) 0px 5px 15px;
-
+            box-shadow: rgba(0, 0, 0, 0.15) 1px 2px 1px 2px;
+            transition: none;
             &:active {
-                transform: translateY(0.5px);
-                box-shadow: rgba($color: $secondary-color, $alpha: 1) 3px 3px 6px 0px inset,
-                    rgba($color: $secondary-color, $alpha: 0.5) -3px -3px 6px 1px inset;
+                box-shadow: rgba(0, 0, 0, 0.15) -0.5px 0px 1px 1px;
+                transform: translateY(1px);
             }
         }
     }

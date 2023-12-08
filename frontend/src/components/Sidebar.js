@@ -34,13 +34,13 @@ export const Sidebar = () => {
                 <UserInfo size="large" username={currentUser?.username} avatar={currentUser?.avatar} />
                 <div className="my-1 w-100 d-flex align-items-center justify-content-center">
                     <Button
-                        variant="outline"
-                        className="btn-logout btn-medium fw-semibold"
+                        variant="primary"
+                        className="btn-edit-profile btn-medium fw-semibold"
                         onClick={() => setShowEditProfileModal(true)}>
                         Edit profile
                     </Button>
                     <Button
-                        variant="outline"
+                        variant="primary"
                         className={
                             isFetching
                                 ? "btn-logout btn-medium fw-semibold"

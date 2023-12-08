@@ -5,12 +5,11 @@ $max-height-list: 100px;
 .create-room-modal {
     .header,
     .body {
-        background-color: $secondary-color;
-        border-color: $light-blue-color;
+        border: none;
+        background-color: $primary-color;
     }
 
     .body {
-        border-radius: 4px;
         .search-box {
             background-color: $white-color;
             border-radius: 4px;
@@ -50,6 +49,10 @@ $max-height-list: 100px;
                     cursor: pointer;
                 }
             }
+        }
+        .btn-submit {
+            background-color: $black-color !important;
+            background-image: none;
         }
 
         .list-added-user {

@@ -2,8 +2,11 @@
 
 .chat-info {
     height: 100vh;
-    border-left: 1px solid $secondary-color;
-    background-color: $light-blue-color;
+    background-image: linear-gradient(
+        to right,
+        rgba($color: $green-color, $alpha: 0.8),
+        rgba($color: $green-color, $alpha: 1)
+    );
     .chat-members {
         overflow: hidden;
         .list-members {
