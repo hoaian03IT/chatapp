@@ -10,9 +10,10 @@ import { EditProfileModal } from "./EditProfileModal";
 import { CreateRoomModal } from "./CreateRoomModal";
 import { $auth } from "../app/selectors";
 import { createAxiosRequest } from "../utils/createInstance";
+import { logOutUser } from "../app/api";
 
 import "../styles/sidebar.scss";
-import { logOutUser } from "../app/api";
+import { SearchUser } from "./SearchUser";
 
 export const Sidebar = () => {
     const { currentUser, isFetching } = useSelector($auth);
@@ -52,6 +53,7 @@ export const Sidebar = () => {
                 </div>
             </header>
             <main className="main">
+                <SearchUser />
                 <button className="btn-create-new-chat py-2 w-100" onClick={() => setShowCreateModal(true)}>
                     <div className="wrapper-icon-create">
                         <AiOutlinePlus className="icon-create fs-1" />

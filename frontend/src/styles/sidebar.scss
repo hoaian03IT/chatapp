@@ -19,6 +19,7 @@ $height-header-sidebar: 150px;
     }
     .main {
         max-height: calc(90vh - $height-header-sidebar);
+
         .btn-create-new-chat {
             background-color: transparent;
             border-left: none;

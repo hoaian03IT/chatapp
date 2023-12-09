@@ -1,23 +1,29 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Modal, Image, Button } from "react-bootstrap";
 
 import "../styles/user_info_modal.scss";
 import { addFriend, unfriendApi } from "../app/api";
 
 export const UserInfoModal = memo(({ username, bio, avatar, _id, isFriend, show, onHide, axiosJWT }) => {
-    const [isFriendState, setIsFriendState] = useState(isFriend);
+    const [isFriendState, setIsFriendState] = useState();
+
     const handleAddFriend = async () => {
         try {
-            await addFriend(_id, axiosJWT);
             setIsFriendState(true);
+            await addFriend(_id, axiosJWT);
         } catch (error) {}
     };
     const handleUnFriend = async () => {
         try {
-            await unfriendApi(_id, axiosJWT);
             setIsFriendState(false);
+            await unfriendApi(_id, axiosJWT);
         } catch (error) {}
     };
+
+    useEffect(() => {
+        setIsFriendState(isFriend);
+    }, [isFriend]);
+
     return (
         <Modal className="user-info-modal" show={show} onHide={onHide} centered size="sm">
             <Modal.Body>

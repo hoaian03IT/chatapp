@@ -34,7 +34,7 @@ export const ChatInfo = () => {
                 }
             } catch (error) {}
         },
-        [axiosJWT, currentUser._id]
+        [axiosJWT, currentUser?._id]
     );
 
     return (

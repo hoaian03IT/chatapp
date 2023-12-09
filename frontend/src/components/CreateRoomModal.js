@@ -1,4 +1,4 @@
-import { useContext, useEffect, useId, useState } from "react";
+import { Suspense, useContext, useDeferredValue, useEffect, useId, useState } from "react";
 import { Button, FormControl, FormGroup, Image, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { PiMagnifyingGlassLight } from "react-icons/pi";
@@ -14,6 +14,7 @@ import { Loading } from "./Loading";
 import { SocketContext } from "../pages/Chat";
 
 import "../styles/create_room_modal.scss";
+import { Popper } from "./Popper";
 
 export const CreateRoomModal = ({ show, onHide }) => {
     const [search, setSearch] = useState("");
@@ -91,17 +92,23 @@ export const CreateRoomModal = ({ show, onHide }) => {
                             autoFocus={true}
                         />
                         {search && <IoMdCloseCircle className="clear-icon mx-2 fs-4" onClick={() => setSearch("")} />}
-                        <div className="search-list position-absolute bottom-0 start-0">
-                            {searchList.map((user) => (
-                                <div
-                                    key={user.username}
-                                    className="search-item p-2 w-100 d-flex align-items-center"
-                                    onClick={() => handleAddUser(user)}>
-                                    <Image src={user.avatar} className="avatar avatar-small me-2" />
-                                    <span className="username">{user.username}</span>
-                                </div>
-                            ))}
-                        </div>
+                        {searchList.length > 0 && (
+                            <Popper>
+                                <Suspense fallback={<Loading />}>
+                                    <div className="search-list">
+                                        {searchList.map((user) => (
+                                            <div
+                                                key={user.username}
+                                                className="search-item p-2 w-100 d-flex align-items-center"
+                                                onClick={() => handleAddUser(user)}>
+                                                <Image src={user.avatar} className="avatar avatar-small me-2" />
+                                                <span className="username">{user.username}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </Suspense>
+                            </Popper>
+                        )}
                     </FormGroup>
                 </div>
                 <div className="list-added-user p-1 d-flex flex-wrap">

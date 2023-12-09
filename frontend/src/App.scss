@@ -29,8 +29,15 @@
 }
 
 .modal-content {
-    border-radius: 20px !important;
-    overflow: hidden !important;
+    border-radius: 15px !important;
+    .header {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+    .body {
+        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 15px;
+    }
 }
 
 .form-control {

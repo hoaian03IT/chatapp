@@ -41,7 +41,9 @@ class Controller {
                 username: {
                     $regex: q,
                 },
-            }).select("_id username avatar");
+            })
+                .select("_id username avatar")
+                .limit(8);
             res.status(200).json({ users });
         } catch (error) {
             console.log(error);
