@@ -22,7 +22,7 @@ export const UserInfoModal = memo(({ username, bio, avatar, _id, isFriend, show,
 
     useEffect(() => {
         setIsFriendState(isFriend);
-    }, [isFriend]);
+    }, [isFriend, show]);
 
     return (
         <Modal className="user-info-modal" show={show} onHide={onHide} centered size="sm">
