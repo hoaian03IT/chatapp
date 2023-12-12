@@ -16,7 +16,6 @@
     }
     .user-list {
         max-height: 200px;
-        background-color: rgba($color: $green-color, $alpha: 0.8);
         overflow-y: auto;
         .user-item {
             cursor: pointer;

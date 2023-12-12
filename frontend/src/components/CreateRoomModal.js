@@ -1,11 +1,11 @@
-import { Suspense, useContext, useEffect, useId, useState } from "react";
+import { Suspense, useContext, useEffect, useId, useRef, useState } from "react";
 import { Button, FormControl, FormGroup, Image, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { PiMagnifyingGlassLight } from "react-icons/pi";
 import { IoMdClose, IoMdCloseCircle } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useDebounce } from "../hooks";
+import { useDebounce, useDetectClickOutSide } from "../hooks";
 import { createRoom, findUser } from "../app/api";
 import { createAxiosRequest } from "../utils/createInstance";
 import { $auth, $room } from "../app/selectors";
@@ -31,6 +31,9 @@ export const CreateRoomModal = ({ show, onHide }) => {
     const debouncedSearch = useDebounce(search, 500);
 
     const idInput = useId();
+
+    const formRef = useRef(null);
+    const isClickOutSideForm = useDetectClickOutSide(formRef);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -77,7 +80,7 @@ export const CreateRoomModal = ({ show, onHide }) => {
             <Modal.Header className="header py-2 fs-3 fw-bold d-flex justify-content-center">Create Room</Modal.Header>
             <Modal.Body className="body">
                 <div className="search-box position-relative">
-                    <FormGroup className="d-flex align-items-center">
+                    <FormGroup ref={formRef} className="d-flex align-items-center">
                         <label htmlFor={idInput}>
                             <PiMagnifyingGlassLight className="search-icon ms-2 fs-4" />
                         </label>
@@ -88,11 +91,11 @@ export const CreateRoomModal = ({ show, onHide }) => {
                             type="text"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            autoComplete="input"
+                            autoComplete="off"
                             autoFocus={true}
                         />
                         {search && <IoMdCloseCircle className="clear-icon mx-2 fs-4" onClick={() => setSearch("")} />}
-                        {searchList.length > 0 && (
+                        {searchList.length > 0 && !isClickOutSideForm && (
                             <Popper className="w-100">
                                 <Suspense fallback={<Loading />}>
                                     <div className="search-list">

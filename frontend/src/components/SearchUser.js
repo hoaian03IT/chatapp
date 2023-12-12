@@ -1,9 +1,9 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PiMagnifyingGlassLight } from "react-icons/pi";
 
-import { useDebounce } from "../hooks";
+import { useDebounce, useDetectClickOutSide } from "../hooks";
 import { Popper } from "./Popper";
 import { fetchUserInfo, findUser } from "../app/api";
 import { createAxiosRequest } from "../utils/createInstance";
@@ -27,9 +27,12 @@ export const SearchUser = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const axiosJWT = createAxiosRequest(currentUser, dispatch, navigate, loginSuccess);
-
     const searchId = useId();
+    const searchUserRef = useRef(null);
+
+    const isClickOutSide = useDetectClickOutSide(searchUserRef);
+
+    const axiosJWT = createAxiosRequest(currentUser, dispatch, navigate, loginSuccess);
 
     const getUserInfo = async (id) => {
         try {
@@ -54,7 +57,7 @@ export const SearchUser = () => {
     }, [currentUser?.username, searchUserValueDebounced]);
 
     return (
-        <div className="search-user px-3 py-2 d-flex">
+        <div ref={searchUserRef} className="search-user px-3 py-2 d-flex">
             <label htmlFor={searchId}>
                 <PiMagnifyingGlassLight className="search-icon me-2 fs-4" />
             </label>
@@ -66,7 +69,7 @@ export const SearchUser = () => {
                 onChange={(e) => setSearchUserValue(e.target.value)}
                 placeholder="Find someone..."
             />
-            {users.length > 0 && (
+            {users.length > 0 && !isClickOutSide && (
                 <Popper className="popper">
                     <div className="user-list">
                         {users.map((user) => (

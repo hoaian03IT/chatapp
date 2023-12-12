@@ -1,2 +1,3 @@
 import useDebounce from "./useDebounce";
-export { useDebounce };
+import useDetectClickOutSide from "./useClickOutSide";
+export { useDebounce, useDetectClickOutSide };
