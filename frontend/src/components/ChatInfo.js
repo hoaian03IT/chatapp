@@ -47,7 +47,7 @@ export const ChatInfo = () => {
                             <div
                                 key={mem._id}
                                 className={
-                                    currentUser._id === mem._id
+                                    currentUser?._id === mem._id
                                         ? "item-member not-hover px-3 py-2"
                                         : "item-member px-3 py-2"
                                 }>
