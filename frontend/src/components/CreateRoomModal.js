@@ -1,4 +1,4 @@
-import { Suspense, useContext, useDeferredValue, useEffect, useId, useState } from "react";
+import { Suspense, useContext, useEffect, useId, useState } from "react";
 import { Button, FormControl, FormGroup, Image, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { PiMagnifyingGlassLight } from "react-icons/pi";
@@ -93,7 +93,7 @@ export const CreateRoomModal = ({ show, onHide }) => {
                         />
                         {search && <IoMdCloseCircle className="clear-icon mx-2 fs-4" onClick={() => setSearch("")} />}
                         {searchList.length > 0 && (
-                            <Popper>
+                            <Popper className="w-100">
                                 <Suspense fallback={<Loading />}>
                                     <div className="search-list">
                                         {searchList.map((user) => (

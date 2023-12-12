@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PiMagnifyingGlassLight } from "react-icons/pi";
@@ -8,11 +8,11 @@ import { Popper } from "./Popper";
 import { fetchUserInfo, findUser } from "../app/api";
 import { createAxiosRequest } from "../utils/createInstance";
 import { $auth } from "../app/selectors";
-
-import "../styles/search_user.scss";
 import { loginSuccess } from "../app/slices/authSlice";
 import { UserInfo } from "./UserInfo";
 import { UserInfoModal } from "./UserInfoModal";
+
+import "../styles/search_user.scss";
 
 export const SearchUser = () => {
     const { currentUser } = useSelector($auth);
@@ -29,7 +29,7 @@ export const SearchUser = () => {
 
     const axiosJWT = createAxiosRequest(currentUser, dispatch, navigate, loginSuccess);
 
-    const searchRef = useRef(null);
+    const searchId = useId();
 
     const getUserInfo = async (id) => {
         try {
@@ -55,15 +55,16 @@ export const SearchUser = () => {
 
     return (
         <div className="search-user px-3 py-2 d-flex">
-            <label htmlFor={searchRef}>
+            <label htmlFor={searchId}>
                 <PiMagnifyingGlassLight className="search-icon me-2 fs-4" />
             </label>
             <input
-                id={searchRef}
-                className="search-user-input w-100"
+                id={searchId}
+                className="search-user-input px-2 w-100"
                 type="text"
                 value={searchUserValue}
                 onChange={(e) => setSearchUserValue(e.target.value)}
+                placeholder="Find someone..."
             />
             {users.length > 0 && (
                 <Popper className="popper">
