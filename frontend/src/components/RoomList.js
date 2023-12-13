@@ -56,7 +56,7 @@ export const RoomList = memo(() => {
                             room._id === currentRoom ? "active" : ""
                         } p-3 d-flex align-items-center`}
                         onClick={() => handleOpenRoom(room._id)}>
-                        <Image thumbnail roundedCircle className="room-pic avatar-larger" src={room.picRoom} />
+                        <Image roundedCircle className="room-pic avatar-larger" src={room.picRoom} />
                         <div className="room-content ms-3 d-flex flex-column">
                             <span className="room-name fw-semibold">{room.nameRoom}</span>
                             <span className="last-message fw-light">

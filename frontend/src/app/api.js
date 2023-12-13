@@ -26,11 +26,26 @@ import {
     fetchRoomsRequest,
     fetchRoomsSuccess,
     reInitRoom,
+    updateRoomFailed,
+    updateRoomRequest,
+    updateRoomSuccess,
 } from "./slices/roomSlice";
 import { pathname } from "../config/pathname";
 import { runToast } from "../utils/handleToast";
 
 axios.defaults.baseURL = process.env.REACT_APP_HOST;
+
+export const updateRoom = async (payload, axiosJWT, dispatch) => {
+    dispatch(updateRoomRequest());
+    try {
+        const res = await axiosJWT.post("/room/v/update-room", payload);
+        dispatch(updateRoomSuccess(payload));
+        runToast("success", res.data.message);
+    } catch (error) {
+        dispatch(updateRoomFailed());
+        runToast("error", error?.response?.data.message || error.message);
+    }
+};
 
 export const addFriend = async (id, axiosJWT) => {
     try {

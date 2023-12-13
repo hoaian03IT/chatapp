@@ -12,9 +12,9 @@ import { $auth, $room } from "../app/selectors";
 import { loginSuccess } from "../app/slices/authSlice";
 import { Loading } from "./Loading";
 import { SocketContext } from "../pages/Chat";
+import { Popper } from "./Popper";
 
 import "../styles/create_room_modal.scss";
-import { Popper } from "./Popper";
 
 export const CreateRoomModal = ({ show, onHide }) => {
     const [search, setSearch] = useState("");

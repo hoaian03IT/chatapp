@@ -18,6 +18,14 @@ $max-height-input: 80px;
             .name {
                 color: $white-color;
             }
+            .edit-room {
+                .edit-icon {
+                    cursor: pointer;
+                    &:hover {
+                        opacity: 0.6;
+                    }
+                }
+            }
         }
 
         .icon-more-info {

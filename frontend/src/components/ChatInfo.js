@@ -8,10 +8,10 @@ import { ChatContext } from "../pages/Chat";
 import { UserInfoModal } from "./UserInfoModal";
 import { fetchUserInfo } from "../app/api";
 import { createAxiosRequest } from "../utils/createInstance";
-
-import "../styles/chat_info.scss";
 import { $auth } from "../app/selectors";
 import { loginSuccess } from "../app/slices/authSlice";
+
+import "../styles/chat_info.scss";
 export const ChatInfo = () => {
     const { currentUser } = useSelector($auth);
     const { participants } = useContext(ChatContext);

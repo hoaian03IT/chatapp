@@ -51,7 +51,7 @@ export const FormInput = ({ submit, messageValue, setMessageValue }) => {
                 onKeyUp={(e) => handleSubmit(e)}
                 placeholder="Type message..."
             />
-            <Button type="submit" className="d-flex align-items-center">
+            <Button type="submit" className={"d-flex align-items-center"}>
                 Send <AiOutlineSend className="ms-2" />
             </Button>
         </form>

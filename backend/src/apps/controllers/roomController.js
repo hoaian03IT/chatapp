@@ -24,7 +24,11 @@ class Controller {
 
             const nameRoom = addedUsers.reduce((acc, curr) => acc + curr.username + ", ", "");
 
-            const newRoom = await Room.create({ nameRoom: nameRoom, lastMessage: "Room is created" });
+            const newRoom = await Room.create({
+                owner: new mongoose.Types.ObjectId(_id),
+                nameRoom: nameRoom,
+                lastMessage: "Room is created",
+            });
 
             addedUsers = addedUsers.map((user) => ({
                 user: user._id,
@@ -36,6 +40,22 @@ class Controller {
             res.status(200).json({ message: "Room is created", ...newRoom._doc });
         } catch (error) {
             console.log(error);
+            res.status(400).json({ message: error.message });
+        }
+    }
+
+    async updateRoom(req, res) {
+        try {
+            const { _id } = req.user;
+            const { idRoom, nameRoom, picRoom } = req.body;
+            const { owner } = await Room.findById(idRoom).select("owner");
+            console.log("roomOwner: ", owner);
+            console.log("_id: ", _id);
+            if (!owner.equals(new mongoose.Types.ObjectId(_id)))
+                return res.status(400).json({ message: "You cannot edit room" });
+            await Room.findByIdAndUpdate(idRoom, { nameRoom, picRoom });
+            res.status(200).json({ message: "Update successful" });
+        } catch (error) {
             res.status(400).json({ message: error.message });
         }
     }

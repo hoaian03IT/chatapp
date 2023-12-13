@@ -68,6 +68,23 @@ export const roomSlide = createSlice({
             state.error = true;
             state.messageError = action.payload;
         },
+        updateRoomRequest: (state) => {
+            state.isFetching = true;
+            state.error = false;
+        },
+        updateRoomSuccess: (state, action) => {
+            const { _id, picRoom, nameRoom } = action.payload;
+            state.rooms = state.rooms.map((room) => {
+                if (room._id === _id) return { ...room, picRoom: picRoom, nameRoom: nameRoom };
+                return room;
+            });
+            state.isFetching = false;
+        },
+        updateRoomFailed: (state, action) => {
+            state.isFetching = false;
+            state.error = true;
+            state.messageError = action.payload;
+        },
 
         reInitRoom: (state) => {
             state.rooms = [];
@@ -85,12 +102,15 @@ export const {
     createRoomRequest,
     createRoomSuccess,
     createRoomFailed,
-    reInitRoom,
     fetchMessagesRequest,
     fetchMessagesSuccess,
     fetchMessagesFailed,
     fetchOneRoomRequest,
     fetchOneRoomSuccess,
     fetchOneRoomFailed,
+    updateRoomRequest,
+    updateRoomSuccess,
+    updateRoomFailed,
+    reInitRoom,
 } = roomSlide.actions;
 export default roomSlide.reducer;
